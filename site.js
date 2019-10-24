@@ -79,8 +79,8 @@ function getData(dataArray){
 function drawResearch(){
   
   /* ADD THE TOTAL NUMBER TO THE PAGE */
-  document.getElementById("research-count").innerHTML = researches.length;
-  
+  $("#research-count").text(researches.length + " ");
+
   /* CONFIGURE OUR DATA IN CROSSFILTER */
   cf = crossfilter(researches);
   cf.onChange(function(){
