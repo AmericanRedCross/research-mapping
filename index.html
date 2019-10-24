@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/bootstrap-dark.min.css" />
+    <!-- theme used under the MIT License https://github.com/ForEvolve/bootstrap-dark -->
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    
+   
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.5/dc.min.css" />
+   <link rel="stylesheet" href="./site.css" />
+   
+    <title>RCRC Research Mapping</title>
+
+  </head>
+  <body>
+    
+    <div class="modal fade " id="research-modal" tabindex="-1" role="dialog" aria-labelledby="research modal" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- ... -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="container">
+      
+      <div class="row">
+        <div class="mt-5"><h2>Research conducted by the global Red Cross Red Crescent network</h2></div>
+        <h2><small class="text-muted">Advancing the humanitarian mission through evidence and learning</small></h2>
+        <p>Explicabo dolores for illum, aliquam quasi yet laboris nor veniam. Sit rem qui but magni. Dolore nemo and eos for occaecat. Iure illo so quisquam. Incididunt amet sunt. Modi consequatur adipisci fugiat eiusmod, so doloremque. Nostrud dicta vitae.</p>
+        <p>Labore architecto ipsa so cupidatat officia nor ea so magna. Sint id. Ipsa dolore, so unde esse sint. Laboris aute minima ea nor aperiam so adipisci so laborum. Doloremque molestiae. Sequi aliquid consequatur for eaque dolor. Nequeporro aliquid veritatis, but adipisicing but velitesse. Eum qui rem tempora amet eius. Mollit dolores or ex. Do et so voluptate so eius so ullamco. Quisquam. Sit eiusmod aliqua. Quisquam. Suscipit vitae. Molestiae nostrud modi, so consequatur nemo magna ea. Inventore doloremque exercitationem quia but molestiae. Do nihil exercitationem, voluptatem for quaerat consequatur sed. Perspiciatis exercitationem ea so totam beatae. Error in. Dolores sit. Commodo nostrum aliqua. Laboris nostrum but quis yet culpa exercitationem. Ullamco laboris quaerat minim, tempora, totam nor nostrud. Sed minim, aliquam voluptas so qui velit. Fugiat magni yet vel.</p>
+      </div>
+      
+      <div class="row justify-content-center">
+        <div class="col-sm chart-space">
+          <h5 class="">Research Focus</h5>
+          <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
+          <div id="research-focus-chart"></div>
+        </div>
+        <div class="col-sm chart-space">
+          <h5 class="">Partner Type</h5>
+          <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
+          <div id="primary-partner-chart"></div>
+        </div>
+        <div class="col-sm chart-space">
+          <h5 class="">Funding Source</h5>
+          <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
+          <div id="primary-funding-chart"></div>
+        </div>
+      </div>
+
+      <div id="map-row" class="row">
+        <h5 class="mt-3">Research Coverage</h5>
+        <div id="world-chart"></div>
+      </div>
+      
+      <div class="row">
+        <h5 class="mt-3">Research Projects</h5>
+      </div>
+      <div id="research-cards" class="row">
+
+      </div>
+      
+    </div> <!-- /container -->
+    
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted"><small>Created by American Red Cross.</small></span>
+      </div>
+    </footer>
+  
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.7/crossfilter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.5/dc.min.js"></script>
+    <script src="./js/dc.leaflet.js"></script>
+    <script src="./js/topojson.v1.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script src="./site.js"></script>
+
+    
+    
+  </body>
+</html>
