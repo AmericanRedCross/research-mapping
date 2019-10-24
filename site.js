@@ -44,7 +44,7 @@ function fetchMapping() {
 }
 
 /* PROMISES I GUESS??? */
-Promise.all([d3.json("/data/ne_50m-simple-topo.json"), fetchMapping()]).then(function(values) {
+Promise.all([d3.json("./data/ne_50m-simple-topo.json"), fetchMapping()]).then(function(values) {
     getData(values)
 });
 
