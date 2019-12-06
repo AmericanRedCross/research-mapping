@@ -4,6 +4,17 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@PrepareCenter" />
+    <meta property="og:title" content="RCRC Research Mapping" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="The Red Cross and Red Crescent Research Consortium is not only an extensive and rich data producer but also a center of gravity for research and knowledge development. This site presents a collection of some of the research activities." />
+    <meta property="twitter:description" content="The Red Cross and Red Crescent Research Consortium is not only an extensive and rich data producer but also a center of gravity for research and knowledge development. This site presents a collection of some of the research activities." />
+    <meta property="twitter:image" content="./img/twitter-img.png" />
+    <meta property="og:image" content="./img/og-img.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -16,6 +27,8 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.5/dc.min.css" />
    <link rel="stylesheet" href="./site.css" />
    
+   <script src="https://kit.fontawesome.com/d2d755ef56.js" crossorigin="anonymous"></script>
+   
     <title>RCRC Research Mapping</title>
 
   </head>
@@ -24,17 +37,9 @@
     <div class="modal fade " id="research-modal" tabindex="-1" role="dialog" aria-labelledby="research modal" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
-            <!-- ... -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <span class="modal-body-content"></span>
+            <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -46,9 +51,8 @@
       <div class="row">
         <div class="mt-5"><h2>Research conducted by the global Red Cross Red Crescent network</h2></div>
         <h2><small class="text-muted">Advancing the humanitarian mission through evidence and learning</small></h2>
-        <p>Explicabo dolores for illum, aliquam quasi yet laboris nor veniam. Sit rem qui but magni. Dolore nemo and eos for occaecat. Iure illo so quisquam. Incididunt amet sunt. Modi consequatur adipisci fugiat eiusmod, so doloremque. Nostrud dicta vitae.</p>
-        <p>There are currently <span id="research-count">_</span> research projects in the database.</p>
-        <p>Labore architecto ipsa so cupidatat officia nor ea so magna. Sint id. Ipsa dolore, so unde esse sint. Laboris aute minima ea nor aperiam so adipisci so laborum. Doloremque molestiae. Sequi aliquid consequatur for eaque dolor. Nequeporro aliquid veritatis, but adipisicing but velitesse. Eum qui rem tempora amet eius. Mollit dolores or ex. Do et so voluptate so eius so ullamco. Quisquam. Sit eiusmod aliqua. Quisquam. Suscipit vitae. Molestiae nostrud modi, so consequatur nemo magna ea. Inventore doloremque exercitationem quia but molestiae. Do nihil exercitationem, voluptatem for quaerat consequatur sed. Perspiciatis exercitationem ea so totam beatae. Error in. Dolores sit. Commodo nostrum aliqua. Laboris nostrum but quis yet culpa exercitationem. Ullamco laboris quaerat minim, tempora, totam nor nostrud. Sed minim, aliquam voluptas so qui velit. Fugiat magni yet vel.</p>
+        <p>The Red Cross and Red Crescent Research Consortium is made up of a disparate but like minded group of research oriented organizations representing different parts of the Red Cross/Red Crescent Network. This map shows that as whole we are not only an extensive and rich data producer but also a center of gravity for research and knowledge development. This map is a collection of current research activities, studies and academic papers that are supported by the members of the Research Consortium and captures some of the research activities which, when considered as a whole, would rival most universities, academic and research institutions.</p>
+        <p>This commitment to expanding an evidence base, investing in new knowledge and sharing learning across our network is a valuable and valued contribution to our network and the wider humanitarian community. There are currently <span id="research-count">_</span> research projects in this database.</p>    
       </div>
       
       <div class="row justify-content-center">
@@ -68,10 +72,22 @@
           <div id="primary-funding-chart"></div>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <div style="text-align:right;"><small id="reset-dc">Reset filters <i class="fas fa-undo-alt"></i></small></div>
+        </div>
+      </div>  
 
       <div id="map-row" class="row">
         <h5 class="mt-3">Research Coverage</h5>
         <div id="world-chart"></div>
+      </div>
+      
+      <div class="row my-3">
+        <div class="col" style="text-align:center;">
+          <a href="http://twitter.com/intent/tweet?status=Research%20mapping%3A%20https%3A%2F%2Famericanredcross.github.io%2Fresearch-mapping%2F%20via%20%40PrepareCenter" target="_blank" class="btn btn-sm btn-outline-secondary mx-1"><i class="fab fa-twitter"></i>&nbsp; Share on Twitter</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Famericanredcross.github.io%2Fresearch-mapping%2F" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="fab fa-facebook-f"></i> &nbsp; Share on Facebook</a>
+        </div>
       </div>
       
       <div class="row">

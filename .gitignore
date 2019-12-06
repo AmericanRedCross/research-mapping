@@ -1,3 +1,6 @@
+data/regions.geojson
+data/world-simple-topo.json
+
 # Compiled source #
 ###################
 *.com

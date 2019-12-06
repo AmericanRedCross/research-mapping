@@ -1,5 +1,5 @@
 /* GLOBAL VARIABLES */
-var world, researches, countryLookup;
+var geoCountries, geoRegions, geoWorld, researches, countryLookup;
 
 /* IF A DATASHEET COLUMN HEADER CHANGES WE ONLY HAVE TO */
 /* EDIT ONE LINE HERE INSTEAD OF THROUGHOUT THE CODE */
@@ -11,6 +11,7 @@ var focusKey = 'PRIMARY RESEARCH FOCUS';
 var secondaryResearchKey = 'ADDITIONAL RESEARCH FOCUS';
 var otherResearchKey = '"OTHER" RESEARCH FOCUS (Include description)';
 var leadOrgKey = 'PROJECT LEAD ORGANIZATION';
+var leadLogoKey = "LEAD LOGO";
 var leadContactKey = 'PROJECT LEAD CONTACT NAME (Include email)';
 var geoScopeKey = 'GEOGRAPHIC SCOPE';
 var countriesKey = 'LIST COUNTRIES OR IFRC REGIONS (separate list with semicolon and list region only when an entire region is covered)';
@@ -44,14 +45,15 @@ function fetchMapping() {
 }
 
 /* PROMISES I GUESS??? */
-Promise.all([d3.json("./data/ne_50m-simple-topo.json"), fetchMapping()]).then(function(values) {
+Promise.all([d3.json("./data/ne_50m-simple-topo.json"), 
+  fetchMapping()]).then(function(values) {
     getData(values)
 });
 
 /* GET OUR FETCHED DATA READY TO USE */
 function getData(dataArray){
   /* SAVE OUR FETCHED DATA TO OUR GLOBAL VARIABLES */
-  world = topojson.feature(dataArray[0], dataArray[0].objects.ne_50m);
+  geoCountries = topojson.feature(dataArray[0], dataArray[0].objects.world);
   researches = dataArray[1];
   /* LOOP THROUGH AND DO ANY DATA CLEANING ETC ON OUR RESEARCH MAPPING DATA */
   for (var i = 0; i < researches.length; i++){
@@ -67,9 +69,9 @@ function getData(dataArray){
   }
   /* CREATE A LOOKUP FOR COUNTRY NAMES */
   countryLookup = {}
-  for (var i = 0; i < world.features.length; i++){ 
-    var name = world.features[i].properties.name;
-    var iso = world.features[i].properties.iso;
+  for (var i = 0; i < geoCountries.features.length; i++){ 
+    var name = geoCountries.features[i].properties.name;
+    var iso = geoCountries.features[i].properties.iso;
     countryLookup[iso] = name;
   }
   
@@ -172,7 +174,7 @@ function drawResearch(){
       }
     })
     .colorAccessor(function(d){ return d; })
-    .geojson(world)
+    .geojson(geoCountries)
     .featureKeyAccessor(function(feature){
       return feature.properties.iso;
     }) 
@@ -188,6 +190,10 @@ function drawResearch(){
   /* REMOVE THE OSM BASEMAP FOR A CLEAN LOOK */
   worldChart.map().eachLayer(function(layer){
     if( layer instanceof L.TileLayer ){ worldChart.map().removeLayer(layer); }
+  });
+  
+  $("#reset-dc").on("click", function(e){
+    resetDc()
   });
 
   updateCards();
@@ -211,9 +217,9 @@ function updateCards() {
         var html = '<div class="card mb-3 mx-1"><div class="card-body">' +
               '<h5 class="card-title">' + d[titleKey] + '</h5>' +
               '<p class="card-text">' +
-                '<span class="font-weight-bolder">Research focus:</span> ' + d[focusKey] + '<br>' +
-                '<span class="font-weight-bolder">Partner type:</span> ' + d[partnerKey] + '<br>' +
-                '<span class="font-weight-bolder">Primary funding source:</span> ' + d[fundingKey] + '<br>' +
+                ( (d[startYearKey].length > 1) ? 'Start ' + d[startYearKey] + '. ' : '') +
+                ( (d[endYearKey].length > 1) ? 'End ' + d[endYearKey] + '. ' : '') + 
+                ( (d[focusKey].length > 1) ? '<br> Focus on ' + d[focusKey] + '. ' : '') + 
               '</p>'+
               '<button type="button" data-rowid="' + d["rowid"] + '" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#research-modal">Learn More</button>' +
             '</div></div>'
@@ -228,6 +234,13 @@ function updateCards() {
 function resetDc() {
   dc.filterAll();
   dc.redrawAll();
+  worldChart.map().setView([0,0], 2)
+}
+
+function toTitleCase(str) {
+  return str.toLowerCase().replace(/(?:^|\s)\w/g, function(match) {
+    return match.toUpperCase();
+  });
 }
 
 d3.selection.prototype.moveToFront = function() {
@@ -264,22 +277,63 @@ $('#research-modal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget); /* BUTTON THAT TRIGGERED MODAL */
   var cardId = "#research-" + button.data('rowid');
   var cardData = d3.select(cardId).data()[0];
-  var description = '<p>' +
-    '<span class="font-weight-bolder">Primary Research Focus: </span>' + cardData[focusKey] + '<br>' +
-    '<span class="font-weight-bolder">Additional Research Focus: </span>' + cardData[secondaryResearchKey] + '<br>' +
-    '<span class="font-weight-bolder">Project Lead Organization: </span>' + cardData[leadOrgKey] + '<br>' +
-    '<span class="font-weight-bolder">Geographic scope: </span>' + cardData[geoScopeKey] + '<br>' +
-    '<span class="font-weight-bolder">Countries: </span>' + cardData[countriesKey] + '<br>' +
-    '<span class="font-weight-bolder">Project Status: </span>' + cardData[statusKey] + '<br>' +
-    '<span class="font-weight-bolder">Partner Type: </span>' + cardData[partnerKey] + '<br>' +
-    '<span class="font-weight-bolder">Second Partner Type: </span>' + cardData[secondaryPartnerKey] + '<br>' +
-    '<span class="font-weight-bolder">Primary Funding Source: </span>' + cardData[fundingKey] + '<br>' +
-    '<span class="font-weight-bolder">Secondary Funding Source: </span>' + cardData[secondaryFundingKey] + '<br>' +
-    '<span class="font-weight-bolder">Link: </span>' +
-    ( (cardData[linkKey].length > 0) ? '<a target="_blank" href="'+ cardData[linkKey] +'">Link</a>' : 'No Link Provided' ) +
+
+  /* Need to strip out the "NO DATA" we added earlier for counting */ 
+  for(key in cardData){
+    if(cardData[key] === "NO DATA"){ cardData[key] = '' }
+  }
+  
+  /* Some of our text requires more complex logic to build */ 
+  var timespan = ''
+  if( (cardData[startYearKey].length > 3) && (cardData[endYearKey].length > 3) ) {
+    timespan = 'It ran <span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
+  } else if( (cardData[startYearKey].length > 3) && (cardData[endYearKey].length < 3) ) {
+    timespan = 'It ran from <span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ?</span>. '
+  } else if( (cardData[startYearKey].length < 3) && (cardData[endYearKey].length > 3) ) {
+    timespan = 'It ended <span class="">' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
+  } else {
+    timespan = ''
+  }
+  var partnerType = ''
+  if (cardData[partnerKey].length > 3 && cardData[secondaryPartnerKey].length > 3) {
+    partnerType = 'The partner types include <span class="">' + cardData[partnerKey] + '</span> and <span class="">' + cardData[secondaryPartnerKey] + '</span>. '
+  } else if (cardData[partnerKey].length > 3 || cardData[secondaryPartnerKey].length > 3) {
+    partnerType = 'The partner type is <span class="">' + cardData[partnerKey] + cardData[secondaryPartnerKey] + '</span>. '
+  } else {
+    partnerType = ''
+  }
+  
+  /* Putting together the rest of the text for the modal */ 
+  var description = '<h4>' + cardData[titleKey] + '</h4>' + 
+    '<p>' + 
+    ( (cardData[linkKey].length > 0) ? '<span class=""><a target="_blank" href="'+ cardData[linkKey] +'">You can get more details about the project at this link <i class="fas fa-external-link-alt"></i></a></span>' : "<span class=''>Unfortunately we don't have a link to this.</span>" ) + '<br>' +
+    '</p>' +
+    '<p>' +
+    ( (cardData[statusKey].length > 1) ? ' This project is <span class="">' + cardData[statusKey].toLowerCase() + '</span>. ' : '') +
+    timespan + 
+    '</p>' +
+    '<p>' +
+    ( (cardData[focusKey].length > 1 && cardData[focusKey] != 'OTHER') ? ' The primary research focus is <span class="">' + cardData[focusKey] + '</span>. ' : '') +
+    ( (cardData[secondaryResearchKey].length > 1 && cardData[secondaryResearchKey] != 'OTHER') ? ' An additional research focus is <span class="">' + cardData[secondaryResearchKey] + '</span>. ' : '') +
+    ( (cardData[otherResearchKey].length > 1) ? ' The project includes focus on <span class="">' + cardData[otherResearchKey] + '</span>. ' : '') +
+    '</p>' +  
+    '<p>' +
+    ( (cardData[geoScopeKey].length > 1) ? ' This geographic scope of the project is <span class="">' + cardData[geoScopeKey] + '</span>. ' : '') +
+    ( (cardData[countriesKey].length > 1) ? ' The places covered by the project include <span class="">' + cardData[countriesKey] + '</span>. ' : '') +
+    '</p>' +  
+    '<p>' +
+    partnerType +
+    ( (cardData[allPartnersKey].length > 1) ? ' The project partner(s) are: <span class="">' + cardData[allPartnersKey] + '</span>. ' : '') +
+    '</p>' +  
+    '<p>' +
+    ( (cardData[fundingKey].length > 1) ? ' The primary funding source is <span class="">' + cardData[fundingKey].toLowerCase() + '</span>. ' : '') +
+    ( (cardData[secondaryFundingKey].length > 1) ? ' A secondary funding source is <span class="">' + cardData[secondaryFundingKey].toLowerCase() + '</span>. ' : '') +
+    '</p>' +  
+    '<p>' +
+    ( (cardData[leadOrgKey].length > 1) ? 'The project lead organization is <span class="">' + cardData[leadOrgKey] + '</span>.' : '') +
+    ( (cardData[leadLogoKey].length > 3) ? '<br><img class="logo" src=./img/logos/' + cardData[leadLogoKey] + ' />' : '' ) +
     '</p>';
   var modal = $(this);
-  modal.find('.modal-title').text(cardData[titleKey]);
-  $(modal).find('.modal-body').html(description);
+  $(modal).find('.modal-body-content').html(description);
 
 })

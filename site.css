@@ -57,3 +57,15 @@ body {
   height: 150px;
   width: 150px;
 }
+#research-modal .logo {
+  background-color: white;
+  max-width: 200px;
+  max-height: 120px;
+  margin: 6px 0;
+  border-radius: 3px;
+}
+#reset-dc:hover {
+  text-decoration: underline;
+  color: #ffffff;
+  cursor: pointer;
+}
