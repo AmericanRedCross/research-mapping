@@ -301,7 +301,7 @@ $('#research-modal').on('show.bs.modal', function (event) {
   } else if( (cardData[startYearKey].length > 3) && (cardData[endYearKey].length < 3) ) {
     timespan = '<span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ?</span>. '
   } else if( (cardData[startYearKey].length < 3) && (cardData[endYearKey].length > 3) ) {
-    timespan = '<span class="">' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
+    timespan = 'End date: <span class="">' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
   } else {
     timespan = ''
   }
