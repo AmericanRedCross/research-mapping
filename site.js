@@ -249,7 +249,18 @@ d3.selection.prototype.moveToFront = function() {
   });
 };
 
-/* If USER RESIZES THE PAGE, RESIZE OUR PAGE ELEMENTS */
+/* SOCIAL SHARE OPENS UP IN SMALLER POPUP WINDOW */
+$("#twitter-share").on('click', function() {
+  window.open('https://twitter.com/intent/tweet?status=Research%20mapping%3A%20https%3A%2F%2Fresearch.preparecenter.org%20via%20%40PrepareCenter', "shareOnTwitter", 'width=800,height=600');
+})
+$("#facebook-share").on('click', function() {
+  window.open('https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Famericanredcross.github.io%2Fresearch-mapping%2F', "shareOnFacebook", 'width=800,height=600');
+})
+$("#linkedin-share").on('click', function() {
+  window.open('https://www.linkedin.com/shareArticle?mini=true&url=https%3A//research.preparecenter.org/', "shareOnLinkedIn", 'width=800,height=600');
+})
+
+/* IF USER RESIZES THE PAGE, RESIZE OUR PAGE ELEMENTS */
 d3.select(window).on("resize", throttle);
 var throttleTimer;
 function throttle() {
