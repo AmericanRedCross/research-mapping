@@ -297,11 +297,11 @@ $('#research-modal').on('show.bs.modal', function (event) {
   /* Some of our text requires more complex logic to build */ 
   var timespan = ''
   if( (cardData[startYearKey].length > 3) && (cardData[endYearKey].length > 3) ) {
-    timespan = 'It ran <span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
+    timespan = '<span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
   } else if( (cardData[startYearKey].length > 3) && (cardData[endYearKey].length < 3) ) {
-    timespan = 'It ran from <span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ?</span>. '
+    timespan = '<span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ?</span>. '
   } else if( (cardData[startYearKey].length < 3) && (cardData[endYearKey].length > 3) ) {
-    timespan = 'It ended <span class="">' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
+    timespan = '<span class="">' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
   } else {
     timespan = ''
   }
