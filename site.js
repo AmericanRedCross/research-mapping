@@ -1,5 +1,5 @@
 /* GLOBAL VARIABLES */
-var geoCountries, geoRegions, geoWorld, researches, countryLookup;
+var geoCountries, geoRegions, geoWorld, researches, countryLookup, centreUrls;
 
 /* IF A DATASHEET COLUMN HEADER CHANGES WE ONLY HAVE TO */
 /* EDIT ONE LINE HERE INSTEAD OF THROUGHOUT THE CODE */
@@ -49,7 +49,8 @@ function fetchMapping() {
 
 /* PROMISES I GUESS??? */
 Promise.all([d3.json("./data/ne_50m-simple-topo.json"), 
-  fetchMapping()]).then(function(values) {
+  fetchMapping(),
+  d3.csv("./img/logos/urls.csv")]).then(function(values) {
     getData(values)
 });
 
@@ -58,6 +59,7 @@ function getData(dataArray){
   /* SAVE OUR FETCHED DATA TO OUR GLOBAL VARIABLES */
   geoCountries = topojson.feature(dataArray[0], dataArray[0].objects.world);
   researches = dataArray[1];
+  centreUrls = dataArray[2];
   /* LOOP THROUGH AND DO ANY DATA CLEANING ETC ON OUR RESEARCH MAPPING DATA */
   for (var i = 0; i < researches.length; i++){
     /* SAVE THE INDEX AS A UNIQUE ID FOR LATER */
@@ -118,9 +120,11 @@ function drawResearch(){
     .width(chartWidth)
     .height(null)
     .renderLabel(false)
-    .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
     .colorDomain(focusDomain)
-    .slicesCap(5)
+    .colors(d3.scaleOrdinal().range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]))
+    .slicesCap(11)  
+    // .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
+    // .slicesCap(5)
     .externalLabels(50)
     .externalRadiusPadding(50)
     .drawPaths(true)
@@ -133,9 +137,11 @@ function drawResearch(){
     .width(chartWidth)
     .height(null)
     .renderLabel(false)
-    .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
     .colorDomain(partnerDomain)
-    .slicesCap(5)
+    .colors(d3.scaleOrdinal().range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]))
+    .slicesCap(11)  
+    // .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
+    // .slicesCap(5)
     .externalLabels(50)
     .externalRadiusPadding(50)
     .drawPaths(true)
@@ -148,9 +154,11 @@ function drawResearch(){
     .width(chartWidth)
     .height(null)
     .renderLabel(false)
-    .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
     .colorDomain(fundingDomain)
-    .slicesCap(5)
+    .colors(d3.scaleOrdinal().range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]))
+    .slicesCap(11) 
+    // .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
+    // .slicesCap(5)
     .externalLabels(50)
     .externalRadiusPadding(50)
     .drawPaths(true)
@@ -238,6 +246,14 @@ function resetDc() {
   dc.filterAll();
   dc.redrawAll();
   worldChart.map().setView([0,0], 2)
+}
+
+function lookupUrl(filename) {
+  for(var i = 0; i < centreUrls.length; i++) {
+    console.log(centreUrls[i])
+    if(centreUrls[i]['filename'] == filename) { return centreUrls[i].url; }
+  }
+  return ''
 }
 
 function toTitleCase(str) {
@@ -348,7 +364,11 @@ $('#research-modal').on('show.bs.modal', function (event) {
     '</p>' +  
     '<p>' +
     ( (cardData[leadOrgKey].length > 1) ? 'The project lead organization is <span class="">' + cardData[leadOrgKey] + '</span>.' : '') +
-    ( (cardData[leadLogoKey].length > 3) ? '<br><img class="logo" src=./img/logos/' + cardData[leadLogoKey] + ' />' : '' ) +
+    ( (cardData[leadLogoKey].length > 3) ? '<br>' +
+        (( lookupUrl(cardData[leadLogoKey]).length > 1 ) ? '<a target="_blank" href="'+ lookupUrl(cardData[leadLogoKey]) +'">' : '') +
+        '<img class="logo" src=./img/logos/' + cardData[leadLogoKey] + ' />'  +
+        (( lookupUrl(cardData[leadLogoKey]).length > 1 ) ? '</a>' : '') 
+      : '' ) +
     '</p>';
   var modal = $(this);
   $(modal).find('.modal-body-content').html(description);
