@@ -7,6 +7,7 @@ var titleKey = 'PROJECT TITLE';
 var fundingKey = 'PRIMARY FUNDING SOURCE';
 var secondaryFundingKey = 'SECONDARY FUNDING SOURCE (Optional)';
 var otherFundingKey = '"OTHER" FUNDING SOURCE (Include description)';
+var researchTypeKey = 'TYPE OF RESEARCH';
 var focusKey = 'PRIMARY RESEARCH FOCUS';
 var secondaryResearchKey = 'ADDITIONAL RESEARCH FOCUS';
 var otherResearchKey = '"OTHER" RESEARCH FOCUS (Include description)';
@@ -22,6 +23,8 @@ var startYearKey = 'START YEAR';
 var endMonthKey = 'END MONTH';
 var endYearKey = 'END YEAR';
 var linkKey = 'LINK (to most relevant report)';
+var docTypeKey = 'TYPE OF DOCUMENT';
+var languageKey = 'DOCUMENT LANGUAGE';
 var partnerKey = 'PARTNER TYPE';
 var secondaryPartnerKey = '2ND PARTNER TYPE (Optional)';
 var allPartnersKey = 'LIST ALL PARTNERS';
@@ -317,7 +320,9 @@ $('#research-modal').on('show.bs.modal', function (event) {
   /* Putting together the rest of the text for the modal */ 
   var description = '<h4>' + cardData[titleKey] + '</h4>' + 
     '<p>' + 
-    ( (cardData[linkKey].length > 0) ? '<span class=""><a target="_blank" href="'+ cardData[linkKey] +'">You can get more details about the project at this link <i class="fas fa-external-link-alt"></i></a></span>' : "<span class=''>Unfortunately we don't have a link to this.</span>" ) + '<br>' +
+    ( (cardData[linkKey].length > 0) ? '<span class=""><a target="_blank" href="'+ cardData[linkKey] +'">You can get more details about the project at this link <i class="fas fa-external-link-alt"></i></a></span> ' : "<span class=''>Unfortunately we don't have a link to this.</span> " ) + 
+    ( (cardData[docTypeKey].length > 1) ? ' The type of document is <span class="">' + cardData[docTypeKey] + '</span>. ' : '') +
+    ( (cardData[languageKey].length > 1) ? ' The language of publication is <span class="">' + cardData[languageKey] + '</span>. ' : '') +
     '</p>' +
     '<p>' +
     ( (cardData[statusKey].length > 1) ? ' This project is <span class="">' + cardData[statusKey].toLowerCase() + '</span>. ' : '') +
@@ -327,6 +332,7 @@ $('#research-modal').on('show.bs.modal', function (event) {
     ( (cardData[focusKey].length > 1 && cardData[focusKey] != 'OTHER') ? ' The primary research focus is <span class="">' + cardData[focusKey] + '</span>. ' : '') +
     ( (cardData[secondaryResearchKey].length > 1 && cardData[secondaryResearchKey] != 'OTHER') ? ' An additional research focus is <span class="">' + cardData[secondaryResearchKey] + '</span>. ' : '') +
     ( (cardData[otherResearchKey].length > 1) ? ' The project includes focus on <span class="">' + cardData[otherResearchKey] + '</span>. ' : '') +
+    ( (cardData[researchTypeKey].length > 1) ? ' The type of research is <span class="">' + cardData[researchTypeKey] + '</span>. ' : '') +
     '</p>' +  
     '<p>' +
     ( (cardData[geoScopeKey].length > 1) ? ' This geographic scope of the project is <span class="">' + cardData[geoScopeKey] + '</span>. ' : '') +
