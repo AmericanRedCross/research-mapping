@@ -36,23 +36,27 @@ var primaryPartnerChart = dc.pieChart('#primary-partner-chart');
 var primaryFundingChart = dc.pieChart('#primary-funding-chart');
 var worldChart = dc_leaflet.choroplethChart("#world-chart");
 
-/* USE TABLETOP TO GRAB RESEARCH MAPPING DATA FROM GOOGLE SHEET */
-var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1NgKu_88w4Im7fWeosuRdzLeIg1qG26q0x70RYULdew0/edit?usp=sharing';
+/* GRAB RESEARCH MAPPING DATA FROM GOOGLE SHEET */
 function fetchMapping() {
-    return new Promise(function(resolve, reject) {
-      Tabletop.init( { key: publicSpreadsheetUrl,
-                       callback: function(data, tabletop) { resolve(data) },
-                       simpleSheet: true }
-                    )
-    });
+  return new Promise(function(resolve, reject) {
+    Papa.parse('https://docs.google.com/spreadsheets/d/1NgKu_88w4Im7fWeosuRdzLeIg1qG26q0x70RYULdew0/pub?output=csv', {
+      download: true,
+      header: true,
+      complete: function(results) {
+        resolve(results.data);
+      }
+    })
+  })
 }
-
-/* PROMISES I GUESS??? */
-Promise.all([d3.json("./data/ne_50m-simple-topo.json"), 
-  fetchMapping(),
-  d3.csv("./img/logos/urls.csv")]).then(function(values) {
-    getData(values)
-});
+        
+window.addEventListener('DOMContentLoaded', function(){
+  /* PROMISES I GUESS??? */
+  Promise.all([d3.json("./data/ne_50m-simple-topo.json"), 
+    fetchMapping(),
+    d3.csv("./img/logos/urls.csv")]).then(function(values) {
+      getData(values)
+  });
+})
 
 /* GET OUR FETCHED DATA READY TO USE */
 function getData(dataArray){
