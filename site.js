@@ -39,7 +39,7 @@ var worldChart = dc_leaflet.choroplethChart("#world-chart");
 /* GRAB RESEARCH MAPPING DATA FROM GOOGLE SHEET */
 function fetchMapping() {
   return new Promise(function(resolve, reject) {
-    Papa.parse('https://docs.google.com/spreadsheets/d/1NgKu_88w4Im7fWeosuRdzLeIg1qG26q0x70RYULdew0/pub?output=csv', {
+    Papa.parse('https://cors-anywhere.herokuapp.com/https://docs.google.com/spreadsheets/d/1NgKu_88w4Im7fWeosuRdzLeIg1qG26q0x70RYULdew0/pub?output=csv', {
       download: true,
       header: true,
       complete: function(results) {
