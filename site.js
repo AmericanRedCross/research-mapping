@@ -36,10 +36,10 @@ var primaryPartnerChart = dc.pieChart('#primary-partner-chart');
 var primaryFundingChart = dc.pieChart('#primary-funding-chart');
 var worldChart = dc_leaflet.choroplethChart("#world-chart");
 
-/* GRAB RESEARCH MAPPING DATA FROM GOOGLE SHEET */
+/* GRAB RESEARCH MAPPING DATA */
 function fetchMapping() {
   return new Promise(function(resolve, reject) {
-    Papa.parse('https://cors-anywhere.herokuapp.com/https://docs.google.com/spreadsheets/d/1NgKu_88w4Im7fWeosuRdzLeIg1qG26q0x70RYULdew0/pub?output=csv', {
+    Papa.parse('https://americanredcross.github.io/google-sheets-workaround/research-mapping.csv', {
       download: true,
       header: true,
       complete: function(results) {
