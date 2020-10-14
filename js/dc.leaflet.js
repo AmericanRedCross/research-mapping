@@ -30,7 +30,8 @@ dc_leaflet.leafletBase = function(_chart) {
 
     var _map;
 
-    var _mapOptions=false;
+    /* EDITS */
+    var _mapOptions= { scrollWheelZoom: false }; /* was false */
     var _defaultCenter=false;
     var _defaultZoom=false;
 
