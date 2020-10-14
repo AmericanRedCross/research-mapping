@@ -29,8 +29,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/bootstrap-dark.min.css" />
-    <!-- theme used under the MIT License https://github.com/ForEvolve/bootstrap-dark -->
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     
@@ -56,18 +54,36 @@
       </div>
     </div>
     
-    
-    <div class="container">
-      
-      <div class="row justify-content-center">
-        <div class="mt-5"><h2>Research conducted by the global Red Cross Red Crescent network</h2></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 col-md-5 col-lg-4 my-3 pl-5">
+        <img id="header-logo" src="./img/PrepareCenterGDPC-Logo-CMYKtrans.png" />
+        </div>
       </div>
-      
+    </div>
+    
+    <div class="container-fluid container-title py-3">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h2>Research conducted by the global Red Cross Red Crescent network</h2>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid container-map mx-0 px-0">
+    <div class="container">
+
       <div id="map-row" class="row">
-        <h5 class="mt-3">Research Coverage</h5>
+        <!-- <h5 class="
+        ">Research Coverage</h5> -->
         <div id="world-chart"></div>
-      </div>  
-        
+      </div> 
+    
+    </div>
+    </div>
+    
+    <div class="container">  
+              
       <div class="row">  
         <h2><small class="text-muted">Advancing the humanitarian mission through evidence and learning</small></h2>
         <p>The Red Cross and Red Crescent Research Consortium is made up of a disparate but like minded group of research oriented organizations representing different parts of the Red Cross/Red Crescent Network. This map shows that as whole we are not only an extensive and rich data producer but also a center of gravity for research and knowledge development. This map is a collection of current research activities, studies and academic papers that are supported by the members of the Research Consortium and captures some of the research activities which, when considered as a whole, would rival most universities, academic and research institutions.</p>

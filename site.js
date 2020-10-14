@@ -195,6 +195,9 @@ function drawResearch(){
     }) 
     .on('renderlet', function (d,i) {
       d3.selectAll('.leaflet-interactive[stroke="#ffbf00"]').moveToFront();
+      /* HOW DO I CHANGE THE COLOR OF THE COUNTRIES WITH NO DATA ?!?! */
+      /* THERE HAS TO BE A BETTER WAY */
+      d3.selectAll('.leaflet-interactive[fill="#32353c"]').attr("fill","#f5f5f5");
     })
     
   /* REMOVE THE LOADING SPINNERS */  

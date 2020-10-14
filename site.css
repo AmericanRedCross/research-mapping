@@ -5,25 +5,35 @@ html {
 body {
   margin-bottom: 160px; /* Margin bottom by footer height */
 }
-.dc-legend-item text {
-  fill: #d3d3d3;
+#header-logo {
+  width: 100%;
+}
+.container-title {
+  background-color: #F4F4F4;
+}
+.container-map {
+  background-color: #EDFCFF;
+  border-width: 1px 0;
+  border-color: #A9A9A9;
+  border-style: solid;
 }
 .dc-leaflet {
-  border: 1px solid #21272c;
+  border: none;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 160px; /* Set the fixed height of the footer here */
   /* line-height: 60px; /* Vertically center the text there */
-  background-color: #000;
+  background-color: #F4F4F4;
 }
 .footer-logo {
   display: inline-block;
   height: 110px;
   margin: 12px 0 6px 0;
-  background-color: #f5f5f5;
+  background-color: #F4F4F4;
   border-radius: 3px;
 }
 .footer-logo.gdpc {
@@ -37,20 +47,7 @@ body {
   background: rgba(25,29,33,0.7) !important
 }
 .leaflet-container {
-  background-color: #21272c !important;
-}
-.leaflet-control-attribution {
-  background: rgba(25,29,33,0.7) !important
-}
-.leaflet-control-zoom a {
-  background: rgba(25,29,33) !important;
-  color: #d3d3d3;
-}
-.leaflet-control-zoom a:hover {
-  color: #7e7e7e;
-}
-.leaflet-control-zoom-in {
-  border-bottom-color: #7e7e7e !important;
+  background-color: #EDFCFF !important;
 }
 .info-icon {
   color: #d3d3d3;
@@ -76,6 +73,6 @@ body {
 }
 #reset-dc:hover {
   text-decoration: underline;
-  color: #ffffff;
+  color: #3d3d3d;
   cursor: pointer;
 }
