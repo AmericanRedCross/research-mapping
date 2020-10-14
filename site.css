@@ -89,6 +89,13 @@ body {
   margin: 6px 0;
   border-radius: 3px;
 }
+.card .logo {
+  background-color: white;
+  max-width: 150px;
+  max-height: 90px;
+  border-radius: 3px;
+  margin-left: 18px;
+}
 #reset-dc:hover {
   text-decoration: underline;
   color: #3d3d3d;

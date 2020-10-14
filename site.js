@@ -244,11 +244,13 @@ function updateCards() {
         var html = '<div class="card mb-3 mx-1"><div class="card-body">' +
               '<h5 class="card-title">' + d[titleKey] + '</h5>' +
               '<p class="card-text">' +
-                ( (d[startYearKey].length > 1) ? 'Start ' + d[startYearKey] + '. ' : '') +
-                ( (d[endYearKey].length > 1) ? 'End ' + d[endYearKey] + '. ' : '') + 
+                ( (d[startYearKey].length > 1) ? 'Started ' + d[startYearKey] + '. ' : '') +
+                ( (d[endYearKey].length > 1) ? 'Ended ' + d[endYearKey] + '. ' : '') + 
                 ( (d[focusKey].length > 1) ? '<br> Focus on ' + d[focusKey] + '. ' : '') + 
               '</p>'+
-              '<button type="button" data-rowid="' + d["rowid"] + '" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#research-modal">Learn More</button>' +
+              '<button type="button" data-rowid="' + d["rowid"] + '" class="btn btn-outline-danger btn-sm btn-block" data-toggle="modal" data-target="#research-modal">Learn More ' +
+              ( (d[leadLogoKey].length > 3) ? '<img class="logo " src=./img/logos/' + d[leadLogoKey] + ' />' : '') +
+              '</button>'  +
             '</div></div>'
         return html;
       })
