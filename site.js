@@ -1,6 +1,18 @@
 /* GLOBAL VARIABLES */
 var geoCountries, geoRegions, geoWorld, researches, countryLookup, centreUrls;
 
+// tooltip follows cursor
+$(document).ready(function() {
+  $('body').mouseover(function(e) {
+    //Set the X and Y axis of the tooltip
+    $('#tooltip').css('top', e.pageY + 10 );
+    $('#tooltip').css('left', e.pageX + 20 );
+  }).mousemove(function(e) {
+    //Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
+    $("#tooltip").css({top:(e.pageY+15)+"px",left:(e.pageX+20)+"px"});
+  });
+});
+
 /* IF A DATASHEET COLUMN HEADER CHANGES WE ONLY HAVE TO */
 /* EDIT ONE LINE HERE INSTEAD OF THROUGHOUT THE CODE */
 var titleKey = 'PROJECT TITLE';
@@ -195,9 +207,6 @@ function drawResearch(){
     }) 
     .on('renderlet', function (d,i) {
       d3.selectAll('.leaflet-interactive[stroke="#ffbf00"]').moveToFront();
-      /* HOW DO I CHANGE THE COLOR OF THE COUNTRIES WITH NO DATA ?!?! */
-      /* THERE HAS TO BE A BETTER WAY */
-      d3.selectAll('.leaflet-interactive[fill="#32353c"]').attr("fill","#f5f5f5");
     })
     
   /* REMOVE THE LOADING SPINNERS */  

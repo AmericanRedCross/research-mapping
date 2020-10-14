@@ -527,7 +527,7 @@ dc_leaflet.choroplethChart = function(parent, chartGroup) {
     var _brushOn = true;
     var _featureOptions = {
         /* EDITS */
-        'fillColor':'#32353c', /* was 'black' */
+        'fillColor':'#f5f5f5', /* was 'black' */
         'color':'#494b52', /* was 'gray' */
         'opacity':1, /* was 0.4 */
         'fillOpacity':1, /* was 0.6 */
@@ -573,19 +573,21 @@ dc_leaflet.choroplethChart = function(parent, chartGroup) {
         
         
     /* EDIT - this is new */
-        _info = L.control();
-
-        _info.onAdd = function (map) {
-          this._div = L.DomUtil.create('div', 'country-info');
-          this.update();
-          return this._div;
-        };
-
-        _info.update = function (info) {
-          this._div.innerHTML = (info ? info: 'Hover for details');
-        };
-
-        _info.addTo(_chart.map());
+    
+        // _info = L.control();
+        // 
+        // _info.onAdd = function (map) {
+        //   this._div = L.DomUtil.create('div', 'country-info');
+        //   this.update();
+        //   return this._div;
+        // };
+        // 
+        // _info.update = function (info) {
+        //   this._div.innerHTML = (info ? info: 'Hover for details');
+        // };
+        // 
+        // _info.addTo(_chart.map());
+        
     /* EDIT - end of new */    
         
         
@@ -672,10 +674,12 @@ dc_leaflet.choroplethChart = function(parent, chartGroup) {
           } else {
             var info = feature.properties.name;
           }
-          _info.update(info);
+          // _info.update(info);
+          $("#tooltip").html(info)
         });
         layer.on("mouseout",function(){
-            _info.update();
+            // _info.update();
+            $("#tooltip").empty()
         });
         /* EDIT - this is end of new */
         

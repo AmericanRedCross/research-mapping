@@ -5,6 +5,24 @@ html {
 body {
   margin-bottom: 160px; /* Margin bottom by footer height */
 }
+
+#tooltip {
+  position: absolute;
+  z-index: 9999;
+  font-size: 14px;
+  /* color: #1a1a1a;
+  background-color: rgba(245,245,245,1); */
+  border-radius: 3px;
+  padding: 4px 6px;
+  max-width: 300px;
+  color: #fff;
+  border: 1px solid #494b52;
+  background: rgba(25,29,33,0.7);
+}
+#tooltip:empty {
+  display:none;
+}
+
 #header-logo {
   width: 100%;
 }
