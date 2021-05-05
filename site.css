@@ -38,6 +38,15 @@ body {
 .dc-leaflet {
   border: none;
 }
+.dc-data-count .filter-count, .dc-data-count .total-count {
+    color: #000;
+}
+.reset-link {
+  color: #000;
+}
+.reset-link:hover {
+  color: #3d3d3d;
+}
 
 .footer {
   position: absolute;

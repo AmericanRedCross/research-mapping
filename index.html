@@ -110,12 +110,18 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <div style="text-align:right;"><small id="reset-dc">Reset filters <i class="fas fa-undo-alt"></i></small></div>
+        <div class="col" style="text-align:right;">
+          <div id="count-chart" class="dc-data-count">
+             <small>
+               <span class="filter-count"></span> selected out of
+               <span class = "total-count"></span> | 
+               <a class="reset-link" href="javascript:dc.filterAll(); dc.renderAll();">
+                 Reset all filters <i class="fas fa-undo-alt"></i>
+                </a>
+             </small>
+          </div>
         </div>
       </div>  
-
-
       
       <div class="row my-3">
         <div class="col" style="text-align:center;">

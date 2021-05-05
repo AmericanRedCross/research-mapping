@@ -48,6 +48,8 @@ var primaryPartnerChart = dc.pieChart('#primary-partner-chart');
 var primaryFundingChart = dc.pieChart('#primary-funding-chart');
 var worldChart = dc_leaflet.choroplethChart("#world-chart");
 
+var countChart = dc.dataCount("#count-chart");
+
 /* GRAB RESEARCH MAPPING DATA */
 function fetchMapping() {
   return new Promise(function(resolve, reject) {
@@ -208,6 +210,10 @@ function drawResearch(){
     .on('renderlet', function (d,i) {
       d3.selectAll('.leaflet-interactive[stroke="#ffbf00"]').moveToFront();
     })
+  
+  countChart
+    .dimension(cf)
+    .group(cf.groupAll());
     
   /* REMOVE THE LOADING SPINNERS */  
   $(".chart-loading").remove();
@@ -218,6 +224,8 @@ function drawResearch(){
   worldChart.map().eachLayer(function(layer){
     if( layer instanceof L.TileLayer ){ worldChart.map().removeLayer(layer); }
   });
+  
+
   
   $("#reset-dc").on("click", function(e){
     resetDc()
