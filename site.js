@@ -62,10 +62,10 @@ function fetchMapping() {
     })
   })
 }
-        
+
 window.addEventListener('DOMContentLoaded', function(){
   /* PROMISES I GUESS??? */
-  Promise.all([d3.json("./data/ne_50m-simple-topo.json"), 
+  Promise.all([d3.json("./data/ne_50m-simple-topo.json"),
     fetchMapping(),
     d3.csv("./img/logos/urls.csv")]).then(function(values) {
       getData(values)
@@ -92,17 +92,17 @@ function getData(dataArray){
   }
   /* CREATE A LOOKUP FOR COUNTRY NAMES */
   countryLookup = {}
-  for (var i = 0; i < geoCountries.features.length; i++){ 
+  for (var i = 0; i < geoCountries.features.length; i++){
     var name = geoCountries.features[i].properties.name;
     var iso = geoCountries.features[i].properties.iso;
     countryLookup[iso] = name;
   }
-  
+
   drawResearch();
 }
 
 function drawResearch(){
-  
+
   /* ADD THE TOTAL NUMBER TO THE PAGE */
   $("#research-count").text(researches.length + " ");
 
@@ -127,63 +127,59 @@ function drawResearch(){
   primaryPartnerGroup = primaryPartnerDimension.group();
   primaryFundingGroup = primaryFundingDimension.group();
   countriesGroup = countriesDimension.group();
-  
+
   /* FIGURE OUT HOW MUCH SPACE WE HAVE TO WORK WITH */
   var chartWidth = $(".chart-space").width()
   var mapWidth = $("#map-row").width()
-  
+  var pieCenter = chartWidth / 3 * 2
+  console.log(pieCenter)
+
   /* CONFIGURE OUR CHARTS AND MAP */
-  var focusDomain = researchFocusGroup.top(5).map(x => x.key)
   researchFocusChart
     .width(chartWidth)
     .height(null)
+    .cx(pieCenter)
     .renderLabel(false)
-    .colorDomain(focusDomain)
-    .colors(d3.scaleOrdinal().range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]))
-    .slicesCap(11)  
-    // .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
-    // .slicesCap(5)
-    .externalLabels(50)
-    .externalRadiusPadding(50)
-    .drawPaths(true)
+    .ordinalColors(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"])
+    .slicesCap(11)
+    .externalRadiusPadding(20)
     .dimension(researchFocusDimension)
     .group(researchFocusGroup)
-    .legend(dc.legend());
-    
-  var partnerDomain = primaryPartnerGroup.top(5).map(x => x.key)
+    .legend(new dc.legend().legendText(function(d,i) { return d.name + ' (' + d.data + ')'; }))
+    .on('renderlet', function (d,i) {
+      d3.selectAll('.dc-legend-item>text').attr("y",8);
+    });
+
   primaryPartnerChart
     .width(chartWidth)
     .height(null)
+    .cx(pieCenter)
     .renderLabel(false)
-    .colorDomain(partnerDomain)
-    .colors(d3.scaleOrdinal().range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]))
-    .slicesCap(11)  
-    // .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
-    // .slicesCap(5)
-    .externalLabels(50)
-    .externalRadiusPadding(50)
-    .drawPaths(true)
+    .ordinalColors(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"])
+    .slicesCap(11)
+    .externalRadiusPadding(20)
     .dimension(primaryPartnerDimension)
     .group(primaryPartnerGroup)
-    .legend(dc.legend());
-  
-  var fundingDomain = primaryFundingGroup.top(5).map(x => x.key)
+    .legend(new dc.legend().legendText(function(d,i) { return d.name + ' (' + d.data + ')'; }))
+    .on('renderlet', function (d,i) {
+      d3.selectAll('.dc-legend-item>text').attr("y",8);
+    });
+
   primaryFundingChart
     .width(chartWidth)
     .height(null)
+    .cx(pieCenter)
     .renderLabel(false)
-    .colorDomain(fundingDomain)
-    .colors(d3.scaleOrdinal().range(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"]))
-    .slicesCap(11) 
-    // .colors(d3.scaleOrdinal().range(["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f"]))  
-    // .slicesCap(5)
-    .externalLabels(50)
-    .externalRadiusPadding(50)
-    .drawPaths(true)
+    .ordinalColors(["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3", "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd", "#ccebc5", "#ffed6f"])
+    .slicesCap(11)
+    .externalRadiusPadding(20)
     .dimension(primaryFundingDimension)
     .group(primaryFundingGroup)
-    .legend(dc.legend());
-    
+    .legend(new dc.legend().legendText(function(d,i) { return d.name + ' (' + d.data + ')'; }))
+    .on('renderlet', function (d,i) {
+      d3.selectAll('.dc-legend-item>text').attr("y",8);
+    });
+
   worldChart
     .width(mapWidth)
     .height(400)
@@ -206,27 +202,27 @@ function drawResearch(){
     .geojson(geoCountries)
     .featureKeyAccessor(function(feature){
       return feature.properties.iso;
-    }) 
+    })
     .on('renderlet', function (d,i) {
       d3.selectAll('.leaflet-interactive[stroke="#ffbf00"]').moveToFront();
     })
-  
+
   countChart
     .dimension(cf)
     .group(cf.groupAll());
-    
-  /* REMOVE THE LOADING SPINNERS */  
+
+  /* REMOVE THE LOADING SPINNERS */
   $(".chart-loading").remove();
-  /* DRAW OUR CHARTS AND MAP */ 
+  /* DRAW OUR CHARTS AND MAP */
   dc.renderAll();
-  
+
   /* REMOVE THE OSM BASEMAP FOR A CLEAN LOOK */
   worldChart.map().eachLayer(function(layer){
     if( layer instanceof L.TileLayer ){ worldChart.map().removeLayer(layer); }
   });
-  
 
-  
+
+
   $("#reset-dc").on("click", function(e){
     resetDc()
   });
@@ -248,13 +244,13 @@ function updateCards() {
   researchCards.enter().append('div')
     .attr('class', 'col-sm-4 p-0')
     .attr('id', function(d) { return "research-" + d["rowid"]; })
-    .html(function(d) {  
+    .html(function(d) {
         var html = '<div class="card mb-3 mx-1"><div class="card-body">' +
               '<h5 class="card-title">' + d[titleKey] + '</h5>' +
               '<p class="card-text">' +
                 ( (d[startYearKey].length > 1) ? 'Started ' + d[startYearKey] + '. ' : '') +
-                ( (d[endYearKey].length > 1) ? 'Ended ' + d[endYearKey] + '. ' : '') + 
-                ( (d[focusKey].length > 1) ? '<br> Focus on ' + d[focusKey] + '. ' : '') + 
+                ( (d[endYearKey].length > 1) ? 'Ended ' + d[endYearKey] + '. ' : '') +
+                ( (d[focusKey].length > 1) ? '<br> Focus on ' + d[focusKey] + '. ' : '') +
               '</p>'+
               '<button type="button" data-rowid="' + d["rowid"] + '" class="btn btn-outline-danger btn-sm btn-block" data-toggle="modal" data-target="#research-modal">Learn More ' +
               ( (d[leadLogoKey].length > 3) ? '<img class="logo " src=./img/logos/' + d[leadLogoKey] + ' />' : '') +
@@ -262,7 +258,7 @@ function updateCards() {
             '</div></div>'
         return html;
       })
-  
+
 }
 
 
@@ -325,7 +321,7 @@ function throttle() {
       /* MAP */
       var mapWidth = $("#map-row").width();
       $(".dc-leaflet.leaflet-container").width(mapWidth);
-      worldChart.map().invalidateSize(); /* SEE https://github.com/Leaflet/Leaflet/issues/690 */  
+      worldChart.map().invalidateSize(); /* SEE https://github.com/Leaflet/Leaflet/issues/690 */
     }, 200);
 }
 
@@ -334,12 +330,12 @@ $('#research-modal').on('show.bs.modal', function (event) {
   var cardId = "#research-" + button.data('rowid');
   var cardData = d3.select(cardId).data()[0];
 
-  /* Need to strip out the "NO DATA" we added earlier for counting */ 
+  /* Need to strip out the "NO DATA" we added earlier for counting */
   for(key in cardData){
     if(cardData[key] === "NO DATA"){ cardData[key] = '' }
   }
-  
-  /* Some of our text requires more complex logic to build */ 
+
+  /* Some of our text requires more complex logic to build */
   var timespan = ''
   if( (cardData[startYearKey].length > 3) && (cardData[endYearKey].length > 3) ) {
     timespan = '<span class="">' + cardData[startMonthKey] + ' ' + cardData[startYearKey]  + ' - ' + cardData[endMonthKey] + ' ' + cardData[endYearKey]  + '</span>. '
@@ -358,42 +354,42 @@ $('#research-modal').on('show.bs.modal', function (event) {
   } else {
     partnerType = ''
   }
-  
-  /* Putting together the rest of the text for the modal */ 
-  var description = '<h4>' + cardData[titleKey] + '</h4>' + 
-    '<p>' + 
-    ( (cardData[linkKey].length > 0) ? '<span class=""><a target="_blank" href="'+ cardData[linkKey] +'">You can get more details about the project at this link <i class="fas fa-external-link-alt"></i></a></span> ' : "<span class=''>Unfortunately we don't have a link to this.</span> " ) + 
+
+  /* Putting together the rest of the text for the modal */
+  var description = '<h4>' + cardData[titleKey] + '</h4>' +
+    '<p>' +
+    ( (cardData[linkKey].length > 0) ? '<span class=""><a target="_blank" href="'+ cardData[linkKey] +'">You can get more details about the project at this link <i class="fas fa-external-link-alt"></i></a></span> ' : "<span class=''>Unfortunately we don't have a link to this.</span> " ) +
     ( (cardData[docTypeKey].length > 1) ? ' The type of document is <span class="">' + cardData[docTypeKey] + '</span>. ' : '') +
     ( (cardData[languageKey].length > 1) ? ' The language of publication is <span class="">' + cardData[languageKey] + '</span>. ' : '') +
     '</p>' +
     '<p>' +
     ( (cardData[statusKey].length > 1) ? ' This project is <span class="">' + cardData[statusKey].toLowerCase() + '</span>. ' : '') +
-    timespan + 
+    timespan +
     '</p>' +
     '<p>' +
     ( (cardData[focusKey].length > 1 && cardData[focusKey] != 'OTHER') ? ' The primary research focus is <span class="">' + cardData[focusKey] + '</span>. ' : '') +
     ( (cardData[secondaryResearchKey].length > 1 && cardData[secondaryResearchKey] != 'OTHER') ? ' An additional research focus is <span class="">' + cardData[secondaryResearchKey] + '</span>. ' : '') +
     ( (cardData[otherResearchKey].length > 1) ? ' The project includes focus on <span class="">' + cardData[otherResearchKey] + '</span>. ' : '') +
     ( (cardData[researchTypeKey].length > 1) ? ' The type of research is <span class="">' + cardData[researchTypeKey] + '</span>. ' : '') +
-    '</p>' +  
+    '</p>' +
     '<p>' +
     ( (cardData[geoScopeKey].length > 1) ? ' This geographic scope of the project is <span class="">' + cardData[geoScopeKey] + '</span>. ' : '') +
     ( (cardData[countriesKey].length > 1) ? ' The places covered by the project include <span class="">' + cardData[countriesKey] + '</span>. ' : '') +
-    '</p>' +  
+    '</p>' +
     '<p>' +
     partnerType +
     ( (cardData[allPartnersKey].length > 1) ? ' The project partner(s) are: <span class="">' + cardData[allPartnersKey] + '</span>. ' : '') +
-    '</p>' +  
+    '</p>' +
     '<p>' +
     ( (cardData[fundingKey].length > 1) ? ' The primary funding source is <span class="">' + cardData[fundingKey].toLowerCase() + '</span>. ' : '') +
     ( (cardData[secondaryFundingKey].length > 1) ? ' A secondary funding source is <span class="">' + cardData[secondaryFundingKey].toLowerCase() + '</span>. ' : '') +
-    '</p>' +  
+    '</p>' +
     '<p>' +
     ( (cardData[leadOrgKey].length > 1) ? 'The project lead organization is <span class="">' + cardData[leadOrgKey] + '</span>.' : '') +
     ( (cardData[leadLogoKey].length > 3) ? '<br>' +
         (( lookupUrl(cardData[leadLogoKey]).length > 1 ) ? '<a target="_blank" href="'+ lookupUrl(cardData[leadLogoKey]) +'">' : '') +
         '<img class="logo" src=./img/logos/' + cardData[leadLogoKey] + ' />'  +
-        (( lookupUrl(cardData[leadLogoKey]).length > 1 ) ? '</a>' : '') 
+        (( lookupUrl(cardData[leadLogoKey]).length > 1 ) ? '</a>' : '')
       : '' ) +
     '</p>';
   var modal = $(this);

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123168500-2"></script>
     <script>
@@ -15,7 +15,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@PrepareCenter" />
     <meta property="og:title" content="RCRC Research Mapping" />
@@ -29,22 +29,22 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-    
-   
+
+
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.5/dc.min.css" />
    <link rel="stylesheet" href="./site.css" />
-   
+
    <script src="https://kit.fontawesome.com/d2d755ef56.js" crossorigin="anonymous"></script>
-   
+
     <title>RCRC Research Mapping</title>
 
   </head>
   <body>
-    
+
     <div id="tooltip"></div>
-    
+
     <div class="modal fade " id="research-modal" tabindex="-1" role="dialog" aria-labelledby="research modal" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6 col-md-5 col-lg-4 my-3 pl-5">
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container-fluid container-title py-3">
       <div class="row">
         <div class="col-sm-12 text-center">
@@ -74,27 +74,30 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container-fluid container-map mx-0 px-0">
     <div class="container">
-
       <div id="map-row" class="row">
-        <!-- <h5 class="
-        ">Research Coverage</h5> -->
         <div id="world-chart"></div>
-      </div> 
-    
+      </div>
     </div>
     </div>
-    
-    <div class="container mt-3">  
-              
-      <div class="row">  
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <p class="text-muted"><i>The map displays the geographical scope of where the projects were conducted and not the country of origin of the research.</i></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-3">
+
+      <div class="row">
         <p>The Red Cross and Red Crescent Research Consortium is made up of a disparate but like minded group of research oriented organizations representing different parts of the Red Cross/Red Crescent Network. This map shows that as whole we are not only an extensive and rich data producer but also a center of gravity for research and knowledge development.</p>
         <p>This map is a collection of current research activities, studies and academic papers that are supported by the members of the Research Consortium and captures some of the research activities which, when considered as a whole, would rival most universities, academic and research institutions.</p>
-        <p>This commitment to expanding an evidence base, investing in new knowledge and sharing learning across our network is a valuable and valued contribution to our network and the wider humanitarian community. There are currently <b><span id="research-count">_</span> research projects</b> in this database. We invite you to explore them on this site.</p>    
+        <p>This commitment to expanding an evidence base, investing in new knowledge and sharing learning across our network is a valuable and valued contribution to our network and the wider humanitarian community. There are currently <b><span id="research-count">_</span> research projects</b> in this database. We invite you to explore them on this site.</p>
       </div>
-      
+
       <div class="row justify-content-center mb-5">
         <div class="col-12 col-md-4 my-2" style="text-align:center;">
           <a class="btn btn-lg btn-block btn-outline-danger" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9KGYlNG0mn4YhX_hzaRmPE3-G6aPpyOMSzrsrJO2QhVuzkYtO8xyqw8heqCI5wBe08U_ZL_y8eU3G/pub?gid=268997749&single=true&output=csv" role="button"><i class="fas fa-file-download"></i> &nbsp; Download the Data</a>
@@ -102,21 +105,25 @@
         <div class="col-12 col-md-4 my-2" style="text-align:center;">
           <a class="btn btn-lg btn-block btn-outline-danger" href="https://forms.gle/C2szEs8HXCNxxTmb9" target="_blank" role="button"><i class="fas fa-plus"></i> &nbsp; Share Your Research</a>
         </div>
-        
+
       </div>
-      
+
       <div class="row justify-content-center">
-        <div class="col-sm chart-space">
+        <div class="col-lg-5 col-md-8 col-sm-12">
           <h5 class="">Research Focus</h5>
-          <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
-          <div id="research-focus-chart"></div>
+          <div class="chart-space">
+            <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
+            <div id="research-focus-chart"></div>
+          </div>
         </div>
-        <div class="col-sm chart-space">
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6 col-sm-12 chart-space">
           <h5 class="">Partner Type</h5>
           <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
           <div id="primary-partner-chart"></div>
         </div>
-        <div class="col-sm chart-space">
+        <div class="col-lg-5 col-md-6 col-sm-12 chart-space">
           <h5 class="">Funding Source</h5>
           <div class="spinner-border chart-loading" role="status"><span class="sr-only">Loading...</span></div>
           <div id="primary-funding-chart"></div>
@@ -127,15 +134,15 @@
           <div id="count-chart" class="dc-data-count">
              <small>
                <span class="filter-count"></span> selected out of
-               <span class = "total-count"></span> | 
+               <span class = "total-count"></span> |
                <a class="reset-link" href="javascript:dc.filterAll(); dc.renderAll();">
                  Reset all filters <i class="fas fa-undo-alt"></i>
                 </a>
              </small>
           </div>
         </div>
-      </div>  
-      
+      </div>
+
       <div class="row my-3">
         <div class="col" style="text-align:center;">
           <button id="twitter-share" class="btn btn-sm btn-outline-secondary"><i class="fab fa-twitter"></i> &nbsp; Share on Twitter</button>
@@ -143,16 +150,16 @@
           <button id="linkedin-share" class="btn btn-sm btn-outline-secondary"><i class="fab fa-linkedin-in"></i> &nbsp; Share on LinkedIn</button>
         </div>
       </div>
-      
+
       <div class="row">
         <h5 class="mt-3">Research Projects</h5>
       </div>
       <div id="research-cards" class="row">
 
       </div>
-      
+
     </div> <!-- /container -->
-    
+
     <footer class="footer">
       <div class="container">
         <div class="attribution" style="text-align:center;">
@@ -168,7 +175,7 @@
         </div>
       </div>
     </footer>
-  
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -185,7 +192,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
     <script src="./site.js"></script>
 
-    
-    
+
+
   </body>
 </html>
