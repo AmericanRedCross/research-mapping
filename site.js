@@ -53,7 +53,7 @@ var countChart = dc.dataCount("#count-chart");
 /* GRAB RESEARCH MAPPING DATA */
 function fetchMapping() {
   return new Promise(function(resolve, reject) {
-    Papa.parse('https://americanredcross.github.io/google-sheets-workaround/research-mapping.csv', {
+    Papa.parse('./data/research-mapping.csv', {
       download: true,
       header: true,
       complete: function(results) {
