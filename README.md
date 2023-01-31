@@ -7,7 +7,7 @@ and the [`url.csv`](https://github.com/AmericanRedCross/research-mapping/blob/gh
 
 - bootstrap@4.6.0
 - leaflet@1.5.1
-- dc.leaflet 0.4.0 (this file is EDITED)
+- dc.leaflet 0.4.0 **(this file is EDITED)**
 - dc/3.1.5
 - jquery-3.5.1
 - popper.js@1.16.1
@@ -15,4 +15,4 @@ and the [`url.csv`](https://github.com/AmericanRedCross/research-mapping/blob/gh
 - d3-queue.v3
 - crossfilter2/1.4.7
 - topojson.v1
-- PapaParse/5.1.0
+- PapaParse/5.3.0
