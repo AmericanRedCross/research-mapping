@@ -1,0 +1,33 @@
+name: 'Update data'
+
+on:
+  schedule:
+    - cron:  '00 01 * * *'
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    - name: Install dependencies
+      run: npm install
+    - name: Update data
+      run: node dataUpdate.js
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update data to match" -a || true
+        # The above command will fail if no changes were present, so we ignore that.
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}

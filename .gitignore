@@ -1,6 +1,7 @@
 data/regions.geojson
 data/world-simple-topo.json
 tmp-notes/
+node_modules
 
 # Compiled source #
 ###################

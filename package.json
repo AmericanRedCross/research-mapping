@@ -1,0 +1,22 @@
+{
+  "name": "research-mapping",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmericanRedCross/research-mapping.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/AmericanRedCross/research-mapping/issues"
+  },
+  "homepage": "https://github.com/AmericanRedCross/research-mapping#readme",
+  "dependencies": {
+    "async": "^3.2.4",
+    "needle": "^3.2.0"
+  }
+}
