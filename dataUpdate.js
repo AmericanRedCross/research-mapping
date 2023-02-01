@@ -12,7 +12,7 @@ var needleOptions = {
 }
 needle.get(dataUrl, needleOptions, function(error, response) {
   if (!error && response.statusCode == 200){
-    var outputFile = path.join('../','data','research-mapping.csv');
+    var outputFile = path.join('pages','data','research-mapping.csv');
     console.log(outputFile)
     if (fs.existsSync(outputFile)) {
       fs.unlinkSync(outputFile);
