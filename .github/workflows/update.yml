@@ -31,15 +31,12 @@ jobs:
         node-version: '16'
     - name: Install dependencies
       run: |
-        cd _dataUpdate
         npm install
     - name: Update data
       run: |
-        cd _dataUpdate
         node dataUpdate.js
     - name: Commit files
       run: |
-        ls
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
