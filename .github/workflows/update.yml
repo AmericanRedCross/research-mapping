@@ -29,14 +29,16 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: '16'
-    - name: Install dependencies and update data
+    - name: Install dependencies
       run: |
         cd _dataUpdate
         npm install
+    - name: Update data
+        ls
         node dataUpdate.js
-        cd ../
     - name: Commit files
       run: |
+        ls
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
@@ -48,8 +50,8 @@ jobs:
       with:
         branch: gh-pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
