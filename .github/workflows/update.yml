@@ -1,17 +1,31 @@
-name: 'Update data'
+name: Update data and deploy static content to Pages
 
 on:
   schedule:
     - cron:  '00 01 * * *'
   push:
-    branches:
-      - gh-pages
+    branches: ["gh-pages"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
         node-version: '16'
@@ -20,11 +34,13 @@ jobs:
         cd _dataUpdate
         npm install
         node dataUpdate.js
+        cd ../
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
+        git status
         git commit -m "Update data to match" -a || true
         # The above command will fail if no changes were present, so we ignore that.
     - name: Push changes
@@ -32,3 +48,21 @@ jobs:
       with:
         branch: gh-pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
