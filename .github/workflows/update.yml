@@ -34,6 +34,7 @@ jobs:
         cd _dataUpdate
         npm install
     - name: Update data
+      run: |
         ls
         node dataUpdate.js
     - name: Commit files
