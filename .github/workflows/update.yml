@@ -9,11 +9,7 @@ on:
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  deployments: write
-  pages: write
-  id-token: write
+
 
 # Allow one concurrent deployment
 concurrency:
@@ -49,6 +45,10 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
     runs-on: ubuntu-latest
